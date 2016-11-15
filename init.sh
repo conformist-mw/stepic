@@ -5,7 +5,8 @@ sudo ln -s /home/box/web/etc/nginx.conf /etc/nginx/sites-enabled/nignx.conf
 sudo /etc/init.d/nginx restart
 sudo rm /etc/gunicorn.d/*
 sudo cp etc/{django.conf,wsgi.conf} /etc/gunicorn.d
-/sudo pip3 install django gunicorn MySQL-python
+sudo apt-get update && sudo apt-get install libmysqlclient-dev python3-dev
+sudo pip3 install django gunicorn mysqlclient
 sudo sed -i  -e '1s/python/python3/' -e 's/17.5/19.6.0/g' /usr/sbin/gunicorn-debian /usr/bin/gunicorn
 sudo /etc/init.d/gunicorn restart
 sudo /etc/init.d/mysql start
