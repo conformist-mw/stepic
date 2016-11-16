@@ -1,4 +1,5 @@
-from django.db import models, connection
+from __future__ import unicode_literals
+from django.db import models
 from django.contrib.auth.models import User
 
 
@@ -15,13 +16,17 @@ class Question(models.Model):
     text = models.TextField()
     added_at = models.DateField()
     rating = models.IntegerField()
-    autor = models.OneToOneField(User)
-    likes = models.IntegerField()
-    objects = QuestionManager()
+    author = models.OneToOneField(User)
+    likes = models.ManyToManyField(User, through='Likes')
 
 
 class Answer(models.Model):
     text = models.TextField()
     added_at = models.DateField()
     question = models.ForeignKey(Question)
-    autor = models.CharField(max_length=50)
+    author = models.OneToOneField(User)
+
+
+class Likes(models.Model):
+    question = models.ForeignKey(Question, related_name='like_question')
+    user = models.ForeignKey(User, related_name='like_user')
